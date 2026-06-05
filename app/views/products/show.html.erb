@@ -1,0 +1,29 @@
+<div class="flex justify-center gap-20 py-10">
+  <div class="flex flex-wrap max-w-md">
+    <% @product.images.each do |image| %>
+      <%= image_tag image, class: "min-w-[120px] h-36 object-cover rounded-md" %>
+    <% end %>
+  </div>
+
+  <div data-controller="products" data-products-product-value="<%= @product.to_json %>" class="flex flex-col items-start max-w-sm">
+    <h1 class="font-bold text-4xl uppercase text-white"><%= @product.name %></h1>
+    <p class="text-2xl mt-4 text-white"><%= (@product.price).to_s %> грн</p>
+    <p class="text-md py-8 text-white"><%= @product.description %></p>
+    <div class="my-8">
+      <p class='uppercase text-lg text-white'>Кількість</p>
+      <% @product.stocks.each do |stock| %>
+        <% if stock.amount > 0 %>
+          <button data-action="click->products#selectSize" value="<%= stock.size %>" class="bg-orange-600 text-white font-semibold py-2 px-4 rounded hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
+            <%= stock.size %>
+          </button>
+        <% else %> 
+          <button disabled value="<%= stock.size %>" class="disabled:bg-zinc-600 bg-zinc-700 text-white font-semibold py-2 px-4 rounded cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-opacity-50">
+            <%= stock.size %>
+          </button>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="selected-size"></div>
+    <button data-action="click->products#addToCart" class="inline-flex items-center justify-center px-5 py-3 border border-transparent font-medium rounded-md text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Додати до корзини</button>
+  </div>
+</div>

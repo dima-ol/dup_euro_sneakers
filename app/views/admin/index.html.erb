@@ -1,0 +1,79 @@
+<div class="flex justify-between items-center mb-6">
+  <div>
+    <h1 class="text-4xl font-bold text-grey-900">Замовлення</h1>
+    <p class="text-grey-600 mt-2">Повна панель замовлень доступна прямо на головній адмінці.</p>
+  </div>
+  <%= link_to "Нове замовлення", new_admin_order_path, class: "rounded-lg py-3 px-5 bg-orange-600 text-white font-medium" %>
+</div>
+
+<h2 class="text-2xl text-grey-800 mb-4 font-medium">Нові замовлення</h2>
+<div class="flex flex-col w-full mb-12">
+  <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+    <div class="py-2 inline-block min-w-full">
+      <div class="overflow-x-auto">
+        <table class="min-w-full overflow-x-scroll bg-white rounded-lg shadow-sm">
+          <thead class="bg-orange-50 border-b">
+            <tr>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">ID</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">email</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Телефон покупця</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Адреса</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Сума</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Дія</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @not_fulfilled_orders.each do |order| %>
+              <tr class="bg-grey-50 border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-grey-800 underline">
+                  <%= link_to order.id, admin_order_path(order), class: 'underline' %>
+                </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.customer_email %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.phone %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.address %></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.total %></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= link_to 'Переглянути', admin_order_path(order), class: 'text-orange-600 hover:underline' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%== pagy_nav(@not_fulfilled_pagy) if @not_fulfilled_pagy.pages > 1 %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="text-2xl text-grey-800 mb-4 font-medium">Виконані замовлення</h2>
+<div class="flex flex-col w-full">
+  <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+    <div class="py-2 inline-block min-w-full">
+      <div class="overflow-x-auto">
+        <table class="min-w-full overflow-x-scroll bg-white rounded-lg shadow-sm">
+          <thead class="bg-orange-50 border-b">
+            <tr>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">ID</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Телефон покупця</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Адреса</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Сума</th>
+              <th class="text-sm font-medium text-grey-800 px-6 py-4 text-left">Дія</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @fulfilled_orders.each do |order| %>
+              <tr class="bg-grey-50 border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-grey-800 underline">
+                  <%= link_to order.id, admin_order_path(order), class: 'underline' %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.customer_email %></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.address %></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= order.total %></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-grey-800"><%= link_to 'Переглянути', admin_order_path(order), class: 'text-orange-600 hover:underline' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%== pagy_nav(@fulfilled_pagy) if @fulfilled_pagy.pages > 1 %>
+      </div>
+    </div>
+  </div>
+</div>

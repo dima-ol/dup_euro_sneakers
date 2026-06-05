@@ -1,0 +1,29 @@
+<h2 class="text-white text-3xl font-semibold mb-6">Реєстрація</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field mb-4">
+    <%= f.label :email, "Електронна пошта", class: "text-white block mb-2" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= f.label :password, "Пароль", class: "text-white block mb-2" %>
+    <% if @minimum_password_length %>
+    <em class="text-zinc-300">(<%= @minimum_password_length %> символів мінімум)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= f.label :password_confirmation, "Підтвердження пароля", class: "text-white block mb-2" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Зареєструватися", class: "inline-flex items-center justify-center rounded-lg bg-orange-600 px-5 py-2 text-sm font-semibold text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

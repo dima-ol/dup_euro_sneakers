@@ -1,0 +1,10 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" data-turbo-cache="false" class="rounded-lg border border-red-700 bg-red-950 p-4 text-white mb-6">
+    <h2 class="text-lg font-semibold text-white">Не вдалося зберегти</h2>
+    <ul class="mt-3 list-disc space-y-1 pl-5 text-white">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

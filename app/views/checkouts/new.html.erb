@@ -1,0 +1,120 @@
+<div class="container mx-auto mt-20 max-w-3xl px-4 sm:px-6 lg:px-8">
+  <h1 class="text-white text-3xl font-semibold mb-6">Оформити замовлення</h1>
+
+  <div class="bg-zinc-950 rounded-3xl border border-orange-500 p-8 shadow-lg">
+    <%= form_with model: @order, url: checkout_path, method: :post, local: true do |form| %>
+      <% if @order.errors.any? %>
+        <div id="error_explanation" class="bg-red-950 text-red-400 px-4 py-3 rounded-lg mb-6">
+          <h2 class="font-semibold mb-2"><%= pluralize(@order.errors.count, "помилка") %> забороняють зберегти замовлення:</h2>
+          <ul class="list-disc list-inside">
+            <% @order.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="grid gap-6">
+        <div>
+          <%= form.label :customer_email, "Email покупця", class: "text-white block mb-2" %>
+          <%= form.email_field :customer_email, value: @order.customer_email, class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500", required: true %>
+        </div>
+
+        <div>
+          <%= form.label :phone, "Номер телефону", class: "text-white block mb-2" %>
+          <%= form.telephone_field :phone, value: @order.phone, class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500", required: true %>
+        </div>
+
+        <div>
+          <%= form.label :address, "Адреса доставки", class: "text-white block mb-2" %>
+          <%= form.text_area :address, value: @order.address, class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500", required: true %>
+        </div>
+
+      </div>
+
+      <%= hidden_field_tag :cart, "", id: "checkout_cart_data" %>
+
+      <div class="mt-8">
+        <%= form.submit "Створити замовлення", id: "checkout_submit_btn", class: "inline-flex items-center justify-center rounded-lg bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500", data: { action: "click->checkout#submit" } %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-12">
+    <h2 class="text-white text-2xl font-semibold mb-4">Список товарів у кошику</h2>
+    <div id="checkout_cart_summary" class="space-y-4 text-white"></div>
+    <p id="checkout_empty_message" class="text-white text-lg hidden">Кошик порожній. Додайте товар, перш ніж оформлювати замовлення.</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+    const cartDataInput = document.getElementById("checkout_cart_data")
+    const cartSummary = document.getElementById("checkout_cart_summary")
+    const emptyMessage = document.getElementById("checkout_empty_message")
+    const totalDisplay = document.getElementById("checkout_total_display")
+    const form = document.querySelector("form")
+
+    // Populate cart data and display
+    if (!cart || cart.length === 0) {
+      emptyMessage.classList.remove("hidden")
+      cartDataInput.value = "[]"
+      if (totalDisplay) totalDisplay.innerText = "0 грн"
+      return
+    }
+
+    const total = cart.reduce((sum, item) => sum + Number(item.price) * Number(item.quantity), 0)
+    cartDataInput.value = JSON.stringify(cart)
+    if (totalDisplay) totalDisplay.innerText = `${total} грн`
+
+    cart.forEach((item) => {
+      const card = document.createElement("div")
+      card.className = "rounded-2xl border border-orange-500 bg-zinc-900 p-4"
+      card.innerHTML = `
+        <p class="text-white text-lg font-semibold">${item.name}</p>
+        <p class="text-white">Розмір: ${item.size || 'не обрано'}</p>
+        <p class="text-white">Кількість: ${item.quantity}</p>
+        <p class="text-white">Ціна: ${item.price} грн</p>
+        <p class="text-orange-400 font-semibold">Сума: ${Number(item.price) * Number(item.quantity)} грн</p>
+      `
+      cartSummary.appendChild(card)
+    })
+
+    // Handle form submission
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(form)
+        const csrfToken = document.querySelector("[name='authenticity_token']").value
+
+        fetch(form.action, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": csrfToken,
+            "Accept": "text/html,application/xhtml+xml"
+          },
+          body: formData,
+          redirect: "follow"
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Замовлення успішно створено!' } }))
+              localStorage.removeItem("cart")
+              setTimeout(() => {
+                window.location.href = "/success"
+              }, 800)
+            } else if (response.status === 422) {
+              window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Помилка при заповненні форми' } }))
+            } else {
+              window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Помилка при створенні замовлення' } }))
+            }
+          })
+          .catch(() => {
+            window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Помилка при створенні замовлення' } }))
+          })
+      })
+    }
+  })
+</script>

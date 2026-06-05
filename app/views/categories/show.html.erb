@@ -1,0 +1,29 @@
+<h1 class="text-white text-3xl font-semibold mb-6">Сторінка категорій</h1>
+<div class="min-h-screen flex justify-center">
+  <div class="flex flex-wrap flex-col mt-6">
+    <h2 class="text-lg text-white font-semibold">Фільтрувати</h2>
+    <%= form_with url: category_path(@category), method: :get, class: "flex flex-col"  do |form| %>
+      <%= form.number_field :min, placeholder: "Мінімальна ціна", class: "border border-zinc-700 rounded-md p-2 w-32 bg-zinc-950 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500" %>
+      <%= form.number_field :max, placeholder: "Максимальна ціна", class: "border border-zinc-700 rounded-md p-2 mt-2 w-32 bg-zinc-950 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500" %>
+      <%= form.submit "Фільтрувати", class: "bg-orange-600 text-white rounded-md p-2 mt-2 cursor-pointer hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+    <% end %>
+    <%= form_with url: category_path(@category), method: :get, class: "flex flex-col" do |form| %>
+      <%= form.submit "Очистити", class: "bg-orange-600 text-white rounded-md p-2 mt-2 cursor-pointer hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+    <% end %>
+  </div>
+  <div class="flex flex-wrap mt-6 gap-10 flex-grow justify-center items-start">
+    <% if @products.empty? %>
+      <p class="text-2xl text-left text-white">Речей за вашим запитом не знайдено</p>
+    <% else %>
+      <% @products.each do |product| %>
+        <%= link_to product_path(product) do %>
+          <div class="max-w-xs flex flex-col p-4 justify-center items-center border border-orange-500 rounded-lg">
+            <%= product.images.first ? image_tag(product.images.first.variant(:medium), class: "rounded") : image_tag("http://via.placeholder.com/250", class: "rounded") %>
+            <p class="mt-6 font-medium text-white"><%= product.name %></p>
+            <p class="mt-6 font-small text-white">Ціна: <%= product.price %> грн</p>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

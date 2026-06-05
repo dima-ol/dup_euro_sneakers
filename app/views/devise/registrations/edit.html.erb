@@ -1,0 +1,43 @@
+<h2 class="text-white text-3xl font-semibold mb-6">Редагувати профіль</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field mb-4">
+    <%= f.label :email, "Електронна пошта", class: "text-white block mb-2" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div class="text-zinc-300 mb-4">Очікується підтвердження для: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field mb-4">
+    <%= f.label :password, "Пароль", class: "text-white block mb-2" %> <i class="text-zinc-400">(залиште порожнім, якщо не хочете змінювати)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em class="text-zinc-300"><%= @minimum_password_length %> символів мінімум</em>
+    <% end %>
+  </div>
+
+  <div class="field mb-4">
+    <%= f.label :password_confirmation, "Підтвердження пароля", class: "text-white block mb-2" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= f.label :current_password, "Поточний пароль", class: "text-white block mb-2" %> <i class="text-zinc-400">(нам потрібен ваш поточний пароль, щоб підтвердити зміни)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+
+  <div class="actions mb-6">
+    <%= f.submit "Оновити", class: "inline-flex items-center justify-center rounded-lg bg-orange-600 px-5 py-2 text-sm font-semibold text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500" %>
+  </div>
+<% end %>
+
+<h3 class="text-white text-xl font-semibold mb-3">Видалити акаунт</h3>
+
+<div class="text-white mb-4">Не задоволені? <%= button_to "Видалити акаунт", registration_path(resource_name), data: { confirm: "Ви впевнені?", turbo_confirm: "Ви впевнені?" }, method: :delete, class: "inline-flex items-center justify-center rounded-lg bg-zinc-800 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-orange-500" %></div>
+
+<%= link_to "Назад", :back, class: "text-white underline hover:text-orange-300" %>

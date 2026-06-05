@@ -1,0 +1,61 @@
+<footer class="bg-zinc-950 text-white border-t border-orange-500">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-10 md:py-20 h-auto lg:max-h-[200px] lg:overflow-y-auto">
+    <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+      <!-- About section -->
+      <div class="space-y-4 xl:col-span-1">
+        <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">Про нас</h3>
+        <p class="text-white leading-6">
+          Інтернет магазин брендового спортивного взуття з Європи "Euro sneakers"
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="mt-4 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+        <div class="md:grid md:grid-cols-2 md:gap-8">
+          <div>
+            <h3 class="text-sm font-semibold text-gray-200 tracking wider uppercase">Посилання</h3>
+            <ul class="mt-4 space-y-4">
+              <li>
+                <%= link_to "Домашня сторінка", root_path, class: "text-base leading-6 text-white hover:text-gray-100" %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact information -->
+      <div class="mt-4 mb-4 md:grid lg:grid-cols-2 md:gap-8">
+        <div>
+          <h3 class="text-sm font-semibold tracking-wider uppercase text-gray-200">
+            Контакти
+          </h3>
+          <ul class="mt-4 space-y-4">
+            <li>
+              <p class="text-base leading-6 text-white">
+              Euro sneakers <br>
+              м. Тернопіль
+              </p>
+            </li>
+            <li>
+              <p class="text-base leading-6 text-white">
+              Email: euro_sneakers@gmail.com
+              </p>
+            </li>
+            <li>
+              <p class="text-base leading-6 text-white">
+              Телефон: +380670000000
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-orange-500">
+        <div class="max-w-6xl mx-auto px-4 py-6 md:flex md:items-center md:justify-between">
+          <p class="mt-6 text-base leading-6 text-gray-400 md:mt-0 md:order-1">
+          &copy; <%= Time.now.year %> Euro sneakers
+          </p>
+        </div>
+      </div>
+</footer>
