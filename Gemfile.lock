@@ -180,6 +180,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.5-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     pagy (6.2.0)
@@ -261,6 +263,7 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.6.9-arm64-darwin)
     sqlite3 (1.6.9-x64-mingw-ucrt)
+    sqlite3 (1.6.9-x86_64-linux)
     stimulus-rails (1.3.0)
       railties (>= 6.0.0)
     stringio (3.1.0)
@@ -268,6 +271,8 @@ GEM
     tailwindcss-rails (2.0.33-arm64-darwin)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.33-x64-mingw-ucrt)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.33-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.3.0)
     timeout (0.4.1)
@@ -299,6 +304,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
