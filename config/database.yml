@@ -17,14 +17,14 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   
 
 development:
   <<: *default
   # adapter: sqlite3
   # database: storage/development.sqlite3
-  database: el_backup_development
+  database: euro_sneakers_development
   username: postgres  # often 'postgres' or your Mac/Linux username
   password: admin # <-- Add this line
   host: localhost
@@ -61,7 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: el_backup_test
+  database: euro_sneakers_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -85,5 +85,5 @@ test:
 #
 production:
   <<: *default
-  database: el_backup_prod
+  database: euro_sneakers_prod
   url: <%= ENV["DATABASE_URL"] %> 
