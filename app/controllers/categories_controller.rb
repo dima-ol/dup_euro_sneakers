@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
-    @products = @category.products
+    # Only show products that are active and have more than 1 in stock
+    @products = @category.products.available.includes(images_attachments: :blob)
     if params[:max].present?
       @products = @products.where("price <= ?", params[:max])
     end
