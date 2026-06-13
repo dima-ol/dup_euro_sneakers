@@ -53,7 +53,7 @@
   <% end %>
 
   <div class="inline">
-  <%= form.submit "Додати товар", class: "rounded-lg py-3 px-5 bg-orange-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit(admin_product.new_record? ? "Додати товар" : "Змінити товар", class: "rounded-lg py-3 px-5 bg-orange-600 text-white inline-block font-medium cursor-pointer") %>
   </div>
 
 <% end %>
