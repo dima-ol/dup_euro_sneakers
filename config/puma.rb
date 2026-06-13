@@ -34,4 +34,8 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
-plugin :tmp_restart
+# On Windows the exec-based restart isn't supported and can cause a restart loop,
+# so skip the tmp_restart plugin when running on Windows.
+unless Gem.win_platform?
+  plugin :tmp_restart
+end

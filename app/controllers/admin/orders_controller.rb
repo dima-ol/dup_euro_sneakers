@@ -13,10 +13,12 @@ class Admin::OrdersController < AdminController
   # GET /admin/orders/new
   def new
     @admin_order = Order.new
+    @admin_order.order_products.build
   end
 
   # GET /admin/orders/1/edit
   def edit
+    @admin_order.order_products.build if @admin_order.order_products.empty?
   end
 
   # POST /admin/orders or /admin/orders.json
@@ -65,6 +67,12 @@ class Admin::OrdersController < AdminController
 
     # Only allow a list of trusted parameters through.
     def admin_order_params
-      params.require(:order).permit(:customer_email, :fulfilled, :total, :address)
+      params.require(:order).permit(
+        :customer_email,
+        :fulfilled,
+        :total,
+        :address,
+        order_products_attributes: [:id, :product_id, :size, :quantity, :_destroy]
+      )
     end
 end

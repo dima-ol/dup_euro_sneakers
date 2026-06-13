@@ -36,8 +36,27 @@
     <%= form.text_field :address, class: "block shadow rounded-md border border-orange-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
+  <div class="my-5">
+    <%= form.fields_for :order_products do |order_product_form| %>
+      <%= order_product_form.label :product_id, "Товар" %>
+      <%= order_product_form.collection_select :product_id, Product.available, :id, :display_name, { prompt: "Оберіть товар" }, class: "block shadow rounded-md border border-orange-200 outline-none px-3 py-2 mt-2 w-full" %>
+
+      <div class="my-5">
+        <%= order_product_form.label :quantity, "Кількість" %>
+        <%= order_product_form.number_field :quantity, min: 1, value: order_product_form.object.quantity || 1, class: "block shadow rounded-md border border-orange-200 outline-none px-3 py-2 mt-2 w-full" %>
+      </div>
+
+      <% if order_product_form.object.persisted? %>
+        <div class="my-5">
+          <%= order_product_form.check_box :_destroy, class: "inline mr-2" %>
+          <%= order_product_form.label :_destroy, "Видалити товар" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="inline">
-  <%= form.submit "Створити замовлення", class: "rounded-lg py-3 px-5 bg-orange-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit(admin_order.new_record? ? "Створити замовлення" : "Змінити замовлення", class: "rounded-lg py-3 px-5 bg-orange-600 text-white inline-block font-medium cursor-pointer") %>
   </div>
 
 <% end %>
