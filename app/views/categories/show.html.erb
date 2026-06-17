@@ -18,7 +18,7 @@
       <% @products.each do |product| %>
         <%= link_to product_path(product) do %>
           <div class="max-w-xs flex flex-col p-4 justify-center items-center border border-orange-500 rounded-lg">
-            <%= product.images.first ? image_tag(product.images.first.variant(:medium), class: "rounded") : image_tag("http://via.placeholder.com/250", class: "rounded") %>
+            <%= product.images.first ? image_tag(product.images.first.variant(:medium), class: "rounded object-cover w-[178px] h-[109px] md:w-[250px] md:h-[150px]") : image_tag("http://via.placeholder.com/250", class: "rounded object-cover w-[178px] h-[109px] md:w-[250px] md:h-[150px]") %>
             <p class="mt-6 font-medium text-white"><%= product.name %></p>
             <p class="mt-6 font-small text-white">Ціна: <%= product.price %> грн</p>
           </div>
